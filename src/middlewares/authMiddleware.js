@@ -1,32 +1,29 @@
-const jwt = require("jsonwebtoken");
-const { User } = require("../models/User"); // Replace with your Mongoose User model
+const cookie = require("cookie");
 
-const authMiddleware = async (req, res, next) => {
-  try {
-    // Get the JWT token from the Authorization cookie
-    const token = req.cookies.Authorization;
-    if (!token) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
+const authMiddleware = (req, res, next) => {
+  const cookieHeader = req.headers.cookie;
 
-    // Decode and validate the JWT token
-    const decoded = jwt.verify(token, process.env.SECRET);
-    const userId = decoded.sub;
-
-    // Fetch the user from the database
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    // Attach the user to the request context
-    req.user = user;
-
-    next();
-  } catch (error) {
-    console.error("Authentication error:", error);
-    return res.status(401).json({ error: "Unauthorized" });
+  if (!cookieHeader) {
+    req.user = null;
+    return next();
   }
+
+  // Parse the cookies
+  const cookies = cookie.parse(cookieHeader);
+
+  // Extract values from the cookies
+  const authorization = cookies.Authorization || null;
+  const spotifyAuthorization = cookies.SpotifyAuthorization || null;
+  const userId = cookies.UserID || null;
+
+  // Attach the extracted values to the request object
+  req.user = {
+    authorization,
+    spotifyAuthorization,
+    userId,
+  };
+
+  next();
 };
 
 module.exports = authMiddleware;

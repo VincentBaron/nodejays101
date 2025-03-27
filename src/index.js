@@ -30,7 +30,7 @@ const server = new ApolloServer({
   await sequelize.authenticate();
   console.log("Connected to PostgreSQL");
 
-  await sequelize.sync(); // Sync models with the database
+  // await sequelize.sync(); // Sync models with the database
 
   await server.start();
 
