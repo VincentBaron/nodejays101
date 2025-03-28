@@ -4,12 +4,12 @@ const pg = require("pg");
 
 // Use individual parameters for the database connection
 const sequelize = new Sequelize(
-  process.env.DATABASE_NAME, // Database name
-  process.env.DATABASE_USER, // Username
-  process.env.DATABASE_PASSWORD, // Password
+  process.env.POSTGRES_DATABASE, // Database name
+  process.env.POSTGRES_USER, // Username
+  process.env.POSTGRES_PASSWORD, // Password
   {
-    host: process.env.DATABASE_HOST, // Hostname
-    port: process.env.DATABASE_PORT, // Port
+    host: process.env.POSTGRES_HOST, // Hostname
+    port: process.env.POSTGRES_PORT, // Port
     dialect: "postgres",
     dialectModule: pg,
     logging: false, // Disable logging; set to true for debugging
