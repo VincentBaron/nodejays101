@@ -7,12 +7,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   dialectModule: pg,
   logging: false, // Disable logging; set to true for debugging
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false, // Allow self-signed certificates
-    },
-  },
 });
 
 module.exports = sequelize;

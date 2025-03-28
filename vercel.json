@@ -10,6 +10,10 @@
     {
       "src": "/graphql",
       "dest": "src/api/index.js"
+    },
+    {
+      "src": "/.*",
+      "dest": "src/api/index.js"
     }
   ]
 }

@@ -3,6 +3,7 @@ const typeDefs = require("../graphql/schema");
 const resolvers = require("../graphql/resolvers");
 const sequelize = require("../db/sequelize");
 const authMiddleware = require("../middlewares/authMiddleware");
+const { parse } = require("url");
 
 const server = new ApolloServer({
   typeDefs,
@@ -21,9 +22,24 @@ module.exports = async (req, res) => {
   console.log("Connected to PostgreSQL");
 
   await startServer;
-  return server.createHandler({
-    path: "/graphql",
-  })(req, res);
+
+  const parsedUrl = parse(req.url, true);
+
+  if (parsedUrl.pathname === "/") {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain");
+    res.end("Welcome to the API!");
+    return;
+  }
+
+  if (parsedUrl.pathname === "/graphql") {
+    return server.createHandler({
+      path: "/graphql",
+    })(req, res);
+  }
+
+  res.statusCode = 404;
+  res.end("Not Found");
 };
 
 export const config = {
