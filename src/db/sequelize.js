@@ -15,7 +15,6 @@ const sequelize = new Sequelize(
     logging: false, // Disable logging; set to true for debugging
     dialectOptions: {
       ssl: {
-        require: true,
         rejectUnauthorized: false, // Allow self-signed certificates
       },
     },
