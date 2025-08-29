@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TrackEntity {
+  id: ID!
+  name: String!
+  artist: String!
+  uri: String!
+  imgURL: String
+  liked: Boolean
+  likesCount: Int!
+}
+
+type SetEntity {
+  id: ID!
+  name: String!
+  link: String
+  dummy: Boolean!
+  createdAt: DateTime!
+  user: UserEntity!
+  tracks: [TrackEntity!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserEntity {
+  id: ID!
+  username: String!
+  profilePicURL: String
+}
+
+type Query {
+  sets: [SetEntity!]!
+}
