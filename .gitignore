@@ -1,4 +1,5 @@
 .vercel
 /node_modules
 frontend/node_modules
+nestjs-src/node_modules
 *.env
